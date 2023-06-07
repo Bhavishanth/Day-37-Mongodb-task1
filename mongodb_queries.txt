@@ -29,3 +29,7 @@ Ans: db.products.find({ product_color: "indigo" })
 Ans: db.products.find({product_price: 492 })
 
 10Q. Delete the products which product price value are same
+Ans: db.products.aggregate([{ $group: { _id: "$product_price", count: { $count: {} } } },{ $match: { _id: { $ne: null }, count: { $gt: 1 } } }]);
+After that the result is [36,47] so will be deleting them from the database using below command
+db.products.deleteMany({ product_price: { $in: [36, 47] } });
+
